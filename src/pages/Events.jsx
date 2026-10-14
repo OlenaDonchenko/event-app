@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 import { useState, useEffect } from 'react';
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -14,19 +16,21 @@ const Events = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Events</h1>
-      <ul>
-        {events.map((event) => (
-          <li key={event.id}>
-            <h2>{event.title}</h2>
-            <p>{event.description}</p>
-            <p>{event.date}</p>
-            <p>{event.location}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    
+  <div className="grid gap-4">
+    {events.map((event) => (
+      <div key={event.id} className="card bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title">{event.title}</h2>
+          <div className="card-actions justify-end">
+            <Link to={`/events/${event.id}`} className="btn btn-primary">
+              Read more
+            </Link>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
   );
 };
 

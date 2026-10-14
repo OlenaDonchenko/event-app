@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Users from './pages/Users';
 import User from './pages/User';
 import Events from './pages/Events';
+import Event from './pages/Event';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<Event />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
