@@ -6,6 +6,8 @@ import Nav from './components/Nav';
 import Home from './pages/Home';
 import Users from './pages/Users';
 import Events from './pages/Events';
+import Event from './pages/Event';
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/users" element={<Users />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<Event />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
