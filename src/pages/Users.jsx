@@ -1,5 +1,6 @@
+import { Link } from 'react-router';
+
 import { useState, useEffect, use } from 'react';
-import { Auth } from '../context/AuthContext';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -18,10 +19,22 @@ const Users = () => {
     <div>
       {users?.map((user) => {
         return (
-          <div key={user.id}>
-            user Email: {user.email}
-            <br />
-            user name: {user?.name}
+          <div className="card card-border bg-base-100 w-96">
+            <div className="card-body">
+              {user.name ? (
+                <h2 className="card-title">User Name: {user?.name} </h2>
+              ) : (
+                <h2 className="card-title">
+                  User Name: <span className="text-error">missing</span>
+                </h2>
+              )}
+
+              <div className="card-actions justify-end">
+                <Link to={`/users/${user.id}`} className="btn btn-primary">
+                  Read More
+                </Link>
+              </div>
+            </div>
           </div>
         );
       })}
