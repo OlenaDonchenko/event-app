@@ -59,6 +59,9 @@ const Nav = () => {
         <Link className="btn" to={`/signup`}>
           sign up
         </Link>
+        <Link className="btn" to={`/login`}>
+          Login
+        </Link>
       </div>
     </div>
   );
