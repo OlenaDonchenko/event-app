@@ -20,12 +20,12 @@ const Login = () => {
       });
 
       const data = await res.json();
+      console.log(data);
 
       localStorage.setItem('token', data.token);
       setEmail('');
       setPassword('');
       navigate('/');
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
