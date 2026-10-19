@@ -4,23 +4,50 @@ import { useState, useEffect } from 'react';
 const Events = () => {
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const response = await fetch(`http://localhost:3001/api/events`);
-      const data = await response.json();
-      console.log(data);
-      setEvents(data.results);
-    };
+  const fetchEvents = async () => {
+    const response = await fetch(`http://localhost:3001/api/events`);
+    const data = await response.json();
+    setEvents(data.results);
+  };
 
+  useEffect(() => {
     fetchEvents();
   }, []);
 
   const submitAction = async (formData) => {
-    const title = formData.get('title');
-    const description = formData.get('description');
-    const location = formData.get('location');
-    const myEvent = { title, description, location, date: new Date() };
-    console.log(myEvent);
+    try {
+      if (!localStorage.getItem('token')) {
+        return 'Login in first';
+      }
+      const token = localStorage.getItem('token');
+      const localUser = JSON.parse(localStorage.getItem('user'));
+      const title = formData.get('title');
+      const description = formData.get('description');
+      const location = formData.get('location');
+      const myEvent = {
+        title,
+        description,
+        location,
+        date: new Date(),
+        latitude: 40.785091,
+        longitude: -73.968285,
+        organizerId: localUser.id,
+      };
+      console.log(myEvent);
+      const res = await fetch(`http://localhost:3001/api/events`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(myEvent),
+      });
+      const data = await res.json();
+      console.log(data);
+      fetchEvents();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // {
@@ -36,7 +63,10 @@ const Events = () => {
   return (
     <div className="grid gap-4">
       <div>
-        <form action={submitAction}>
+        <form
+          className="flex flex-col max-w-[50%] mx-auto p-5"
+          action={submitAction}
+        >
           <input name="title" type="text" placeholder="Title" />
           <input name="description" type="text" placeholder="Description" />
           <input name="location" type="text" placeholder="location" />

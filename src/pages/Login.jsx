@@ -23,9 +23,11 @@ const Login = () => {
       console.log(data);
 
       localStorage.setItem('token', data.token);
-      setEmail('');
-      setPassword('');
-      navigate('/');
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // setEmail('');
+      // setPassword('');
+      // navigate('/');
     } catch (error) {
       console.log(error);
     }
