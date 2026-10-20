@@ -50,16 +50,6 @@ const Events = () => {
     }
   };
 
-  // {
-  //     title: 'Summer Festival',
-  //     description: 'A fun summer festival with music and food',
-  //     date: new Date(),
-  //     location: 'Central Park',
-  //     latitude: 40.785091,
-  //     longitude: -73.968285,
-  //     organizerId: 1,
-  //   },
-
   return (
     <div className="grid gap-4">
       <div>

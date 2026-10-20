@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 
 const Event = () => {
   const { id } = useParams();
+  const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const [event, setEvent] = useState(undefined);
@@ -21,7 +22,7 @@ const Event = () => {
   const deleteEvent = async () => {
     try {
       if (!token) {
-        console.log('Sign up first');
+        console.log('Login first');
         return;
       }
       await fetch(`http://localhost:3001/api/events/${id}`, {
@@ -34,8 +35,48 @@ const Event = () => {
     }
   };
 
+  const updateEvent = async (formData) => {
+    try {
+      if (!token) {
+        console.log('Login first');
+        return;
+      }
+
+      const title = formData.get('title');
+      const description = formData.get('description');
+      const location = formData.get('location');
+      const localUser = JSON.parse(localStorage.getItem('user'));
+      console.log(event.title);
+      const updatedEvent = {
+        title: title || event.title,
+        description: description || event.description,
+        location: location || event.location,
+        date: new Date(),
+        latitude: 40.785091,
+        longitude: -73.968285,
+        organizerId: localUser.id,
+      };
+      console.log(updatedEvent);
+
+      const res = await fetch(`http://localhost:3001/api/events/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedEvent),
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setEvent(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="card card-border bg-base-100 w-96">
+    <div className="card card-border bg-base-100">
       <div className="card-body">
         <h2 className="card-title">{event?.title}</h2>
         <p>{event?.description}</p>
@@ -44,7 +85,49 @@ const Event = () => {
         <button className="btn btn-error w-50" onClick={deleteEvent}>
           Delete Event
         </button>
+        {!showForm && (
+          <button
+            className="btn btn-info w-50"
+            onClick={() => setShowForm(!showForm)}
+          >
+            Edit
+          </button>
+        )}
       </div>
+      {showForm && (
+        <div>
+          <form
+            className=" border-1 flex flex-col gap-3 mx-auto p-5"
+            action={updateEvent}
+          >
+            <span
+              className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer  bg-black text-white"
+              onClick={() => setShowForm(!showForm)}
+            >
+              X
+            </span>
+            <input
+              className="input input-primary mx-auto"
+              name="title"
+              type="text"
+              placeholder="Title"
+            />
+            <input
+              className="input input-primary mx-auto"
+              name="description"
+              type="text"
+              placeholder="Description"
+            />
+            <input
+              className="input input-primary mx-auto"
+              name="location"
+              type="text"
+              placeholder="location"
+            />
+            <button className="btn btn-info max-w-[50%] mx-auto">Submit</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
