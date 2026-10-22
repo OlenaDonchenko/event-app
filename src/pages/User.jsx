@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { Auth } from '../context/AuthContext';
 
 const User = () => {
-  const token = localStorage.getItem('token');
+  const { token } = use(Auth);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -51,7 +52,10 @@ const User = () => {
       };
       const res = await fetch(`http://localhost:3001/api/users/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', authorization: `Bearer ${token}` },
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(updatedUser),
       });
       if (!res.ok) {
@@ -78,75 +82,62 @@ const User = () => {
         )}
         <p>{user?.email}</p>
       </div>
-      
+
+      <button className="btn btn-error w-50" onClick={deleteAccount}>
+        Delete Account
+      </button>
+
+      {!showForm && (
         <button
-          className="btn btn-error w-50"
-          onClick={deleteAccount}
+          className="btn btn-info w-50 mt-3"
+          onClick={() => setShowForm(true)}
         >
-          Delete Account
+          Edit User
         </button>
+      )}
 
-        {!showForm && (
+      {showForm && (
+        <div className="relative border border-base-300 rounded-xl bg-base-100 shadow-md flex flex-col gap-4 max-w-md mt-4 p-6">
           <button
-            className="btn btn-info w-50 mt-3"
-            onClick={() => setShowForm(true)}
+            type="button"
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={() => setShowForm(false)}
+            aria-label="Close form"
           >
-            Edit User
+            ×
           </button>
-        )}
 
-        {showForm && (
-          <div className="relative border border-base-300 rounded-xl bg-base-100 shadow-md flex flex-col gap-4 max-w-md mt-4 p-6">
-            <button
-              type="button"
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => setShowForm(false)}
-              aria-label="Close form"
-            >
-              ×
+          <h2 className="text-xl font-bold text-center">Edit User</h2>
+
+          <form action={updateUser} className="flex flex-col gap-3">
+            <label className="form-control w-full">
+              <span className="label-text mb-1">Name</span>
+              <input
+                className="input input-bordered w-full"
+                name="name"
+                type="text"
+                placeholder="Name"
+              />
+            </label>
+
+            <label className="form-control w-full">
+              <span className="label-text mb-1">Email</span>
+              <input
+                className="input input-bordered w-full"
+                name="email"
+                type="email"
+                placeholder="Email"
+              />
+            </label>
+
+            <button className="btn btn-info w-full mt-2" type="submit">
+              Save Changes
             </button>
-
-            <h2 className="text-xl font-bold text-center">
-              Edit User
-            </h2>
-          
-            <form
-              action={updateUser}
-              className="flex flex-col gap-3">
-            
-              <label className="form-control w-full">
-                <span className="label-text mb-1">Name</span>
-                <input
-                  className="input input-bordered w-full"
-                  name="name"
-                  type="text"
-                  placeholder="Name"
-                />
-              </label>
-
-              <label className="form-control w-full">
-                <span className="label-text mb-1">Email</span>
-                <input
-                  className="input input-bordered w-full"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                />
-              </label>
-
-              <button
-                className="btn btn-info w-full mt-2"
-                type="submit"
-              >
-                Save Changes
-              </button>
-            </form>
-          </div>
-        )}
-      </div>
-
+          </form>
+        </div>
+      )}
+    </div>
   );
-}
-
+};
 
 export default User;

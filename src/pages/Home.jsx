@@ -1,6 +1,3 @@
-
-import React from "react";
-
 const Home = () => {
   return (
     <main className="min-h-screen bg-base-100">
@@ -26,15 +23,13 @@ const Home = () => {
 
             <h1 className="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
               Your next
-              <span className="block text-violet-400">
-                great moment
-              </span>
+              <span className="block text-violet-400">great moment</span>
               starts here.
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300 sm:text-xl">
-              Discover exciting events, connect with people,
-              and turn ordinary days into unforgettable memories.
+              Discover exciting events, connect with people, and turn ordinary
+              days into unforgettable memories.
             </p>
 
             <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-slate-300">
@@ -58,14 +53,12 @@ const Home = () => {
         </h2>
 
         <p className="mt-4 max-w-2xl text-base leading-7 text-base-content/70">
-          From inspiring workshops to unforgettable parties,
-          find experiences that match your interests.
+          From inspiring workshops to unforgettable parties, find experiences
+          that match your interests.
         </p>
-
       </section>
     </main>
   );
 };
 
 export default Home;
-

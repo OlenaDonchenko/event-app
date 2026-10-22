@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import { Auth } from '../context/AuthContext';
 
 const Event = () => {
+  const { token } = use(Auth);
   const { id } = useParams();
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
   const [event, setEvent] = useState(undefined);
 
   useEffect(() => {

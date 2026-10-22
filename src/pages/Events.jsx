@@ -1,7 +1,9 @@
+import { useState, useEffect, use } from 'react';
 import { Link } from 'react-router';
+import { Auth } from '../context/AuthContext';
 
-import { useState, useEffect } from 'react';
 const Events = () => {
+  const { token, localUser } = use(Auth);
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
@@ -16,11 +18,9 @@ const Events = () => {
 
   const submitAction = async (formData) => {
     try {
-      if (!localStorage.getItem('token')) {
+      if (!token) {
         return 'Login in first';
       }
-      const token = localStorage.getItem('token');
-      const localUser = JSON.parse(localStorage.getItem('user'));
       const title = formData.get('title');
       const description = formData.get('description');
       const location = formData.get('location');

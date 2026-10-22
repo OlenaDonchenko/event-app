@@ -1,6 +1,17 @@
+import { use } from 'react';
 import { Link } from 'react-router';
+import { Auth } from '../context/AuthContext';
 
 const Nav = () => {
+  const { token, setToken } = use(Auth);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setToken('');
+  };
+
+  console.log(token);
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -56,12 +67,20 @@ const Nav = () => {
         <Link className="btn" to={`/`}>
           Home
         </Link>
-        <Link className="btn" to={`/signup`}>
-          sign up
-        </Link>
-        <Link className="btn" to={`/login`}>
-          Login
-        </Link>
+        {token ? (
+          <button className="btn btn-info" onClick={handleLogout}>
+            logout
+          </button>
+        ) : (
+          <div>
+            <Link className="btn" to={`/signup`}>
+              sign up
+            </Link>
+            <Link className="btn" to={`/login`}>
+              Login
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

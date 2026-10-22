@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { useNavigate } from 'react-router';
+import { Auth } from '../context/AuthContext';
 
 const Login = () => {
+  const { setLocalUser, setToken } = use(Auth);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -24,10 +26,12 @@ const Login = () => {
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      setToken(localStorage.getItem('token'));
+      setLocalUser(JSON.parse(localStorage.getItem('user')));
 
-      // setEmail('');
-      // setPassword('');
-      // navigate('/');
+      setEmail('');
+      setPassword('');
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
