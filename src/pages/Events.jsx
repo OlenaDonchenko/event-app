@@ -7,7 +7,7 @@ const Events = () => {
   const [events, setEvents] = useState([]);
 
   const fetchEvents = async () => {
-    const response = await fetch(`http://localhost:3001/api/events`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/events`);
     const data = await response.json();
     setEvents(data.results);
   };
@@ -34,7 +34,7 @@ const Events = () => {
         organizerId: localUser.id,
       };
       console.log(myEvent);
-      const res = await fetch(`http://localhost:3001/api/events`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/events`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

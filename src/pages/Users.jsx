@@ -6,7 +6,7 @@ const Users = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch(`http://localhost:3001/api/users`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users`);
       const data = await res.json();
       console.log(data);
       setUsers(data.results);

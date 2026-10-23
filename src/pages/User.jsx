@@ -12,7 +12,7 @@ const User = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch(`http://localhost:3001/api/users/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`);
       const data = await res.json();
       console.log(data);
       setUser(data);
@@ -26,7 +26,7 @@ const User = () => {
         console.log(`Sign up first`);
         return;
       }
-      await fetch(`http://localhost:3001/api/users/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         method: 'DELETE',
         headers: { authorization: `Bearer ${token}` },
       });
@@ -50,7 +50,7 @@ const User = () => {
         name: name || user.name,
         email: email || user.email,
       };
-      const res = await fetch(`http://localhost:3001/api/users/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
