@@ -11,7 +11,7 @@ const Event = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const response = await fetch(`http://localhost:3001/api/events/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/events/${id}`);
       const data = await response.json();
       console.log(data);
       setEvent(data);
@@ -26,7 +26,7 @@ const Event = () => {
         console.log('Login first');
         return;
       }
-      await fetch(`http://localhost:3001/api/events/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/events/${id}`, {
         method: 'DELETE',
         headers: { authorization: `Bearer ${token}` },
       });
@@ -59,7 +59,7 @@ const Event = () => {
       };
       console.log(updatedEvent);
 
-      const res = await fetch(`http://localhost:3001/api/events/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/events/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
