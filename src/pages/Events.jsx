@@ -52,17 +52,63 @@ const Events = () => {
 
   return (
     <div className="grid gap-4">
-      <div>
+ 
+      <div className="flex justify-center px-4 py-8">
         <form
-          className="flex flex-col max-w-[50%] mx-auto p-5"
+          className="flex flex-col gap-4 w-full max-w-xl bg-base-100 p-6 sm:p-8 rounded-2xl border border-base-300 shadow-sm"
           action={submitAction}
         >
-          <input name="title" type="text" placeholder="Title" />
-          <input name="description" type="text" placeholder="Description" />
-          <input name="location" type="text" placeholder="location" />
-          <button>Submit</button>
+          <div className="mb-2">
+            <h2 className="text-2xl font-bold">Create an event</h2>
+            <p className="text-base-content/60 mt-1">
+              Share something special with others.
+            </p>
+          </div>
+
+          <label className="form-control w-full">
+            <span className="label-text font-medium mb-2">
+              Event title
+            </span>
+            <input
+              name="title"
+              type="text"
+              placeholder="Enter event title"
+              className="input input-bordered w-full focus:input-primary"
+              required
+            />
+          </label>
+
+          <label className="form-control w-full">
+            <span className="label-text font-medium mb-2">
+              Description
+            </span>
+            <textarea
+              name="description"
+              placeholder="Tell us about your event"
+              className="textarea textarea-bordered w-full h-10 min-h-0 focus:textarea-primary"
+              required
+            />
+          </label>
+
+          <label className="form-control w-full">
+            <span className="label-text font-medium mb-2">
+              Location
+            </span>
+            <input
+              name="location"
+              type="text"
+              placeholder="Where will it take place?"
+              className="input input-bordered w-full focus:input-primary"
+              required
+            />
+          </label>
+
+          <button type="submit" className="btn btn-primary w-full mt-2">
+            Create event
+          </button>
         </form>
       </div>
+
       {events.map((event) => (
         <div key={event.id} className="card bg-base-100 shadow-xl">
           <div className="card-body">
